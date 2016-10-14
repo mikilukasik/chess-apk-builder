@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
+    "get-common": "rm -rf chess-common && git clone https://github.com/mikilukasik/chess-common.git && cd chess-common && npm i",
+    "start": "npm run get-common && node server.js"  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mikilukasik/docker-chess-compiler.git"

@@ -9,6 +9,9 @@ var WebSocketClient = require('websocket').client;
 var serviceName = 'apkBuilder'
 var PORT = 5000;
 
+var log = require('./chess-common/logger')()
+var logError = function (e) {log('ERROR', e.message, e.stack)}
+
 var httpRedirectRules = [{
   inPath: '/builder/app.apk',
   outPath: '/app.apk',
