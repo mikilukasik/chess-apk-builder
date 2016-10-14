@@ -12,17 +12,20 @@ var PORT = 5000;
 var log = require('./chess-common/logger')()
 var logError = function (e) {log('ERROR', e.message, e.stack)}
 
-var httpRedirectRules = [{
+var serviceRules = [{
+  type: 'httpRedirect',
   inPath: '/builder/app.apk',
   outPath: '/app.apk',
   method: 'GET',
   alias: 'getApp'
 },{
+  type: 'httpRedirect',
   inPath: '/builder/log',
   outPath: '/log',
   method: 'GET',
   alias: 'getLog'
 },{
+  type: 'httpRedirect',
   inPath: '/builder/build',
   outPath: '/buildApp',
   method: 'GET',
@@ -60,13 +63,13 @@ ws.on('connect', function(connection) {
 
     var data = {
       service: serviceName,
-      rules: httpRedirectRules.map(function(rule) {
+      rules: serviceRules.map(function(rule) {
         rule.outHost = ip.private
         rule.outPort = PORT
         return rule
       })
     }
-    log('Sending redirect rules to MSG: ',data)
+    log('Sending redirect rules to MSG: ',data)log
     connection.send(JSON.stringify({
       command: 'setRedirectRules',
       data: data
