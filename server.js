@@ -103,9 +103,15 @@ function start() {
     })
 
   app.get('/log', function(req,res){
-    res.writeHead(200, {"Content-Type":"text/enriched"});
-    res.write(logData)
-    res.end()
+    log(function(){return 'getLog'}).then(function(logData){
+      res.writeHead(200, {"Content-Type":"text/enriched"});
+      res.write(logData)
+      res.end()
+    }, function(err){
+      res.writeHead(500, {"Content-Type":"text/enriched"});
+      res.write(err.message)
+      res.end()
+    })
   })
 
   app.get('/buildApp', function(req,res){
