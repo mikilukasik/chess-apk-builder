@@ -58,6 +58,7 @@ ws.on('connect', function(connection) {
     log('WebSocket Client Connected');
 
     var data = {
+      service: serviceName,
       rules: httpRedirectRules.map(function(rule) {
         rule.outHost = ip.private
         rule.outPort = PORT
