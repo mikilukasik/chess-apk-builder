@@ -69,7 +69,7 @@ ws.on('connect', function(connection) {
         return rule
       })
     }
-    log('Sending redirect rules to MSG: ',data)log
+    log('Sending redirect rules to MSG: ', data)
     connection.send(JSON.stringify({
       command: 'setRedirectRules',
       data: data
