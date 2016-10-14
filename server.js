@@ -34,6 +34,7 @@ var ip = {public: '', private: '', gateway: ''}
 
 var building = false
 var built = false
+var started = 0
 
 // var socketAddr =       
 var ws = new WebSocketClient();
@@ -95,9 +96,9 @@ function start() {
     res.writeHead(200, {"Content-Type":"text"});
       exec(req.params.command, function (error, stdout, stderr) {
       res.write(stdout)
-      if (stderr) res.write('\nstderr: ' + stderr);
-      if (error) res.write('\nERROR: ' + error.message + '\n' + error.stack);
-      res.write('\nEOD')
+      if (stderr) res.write('stderr: ' + stderr);
+      if (error) res.write('ERROR: ' + error.message + '' + error.stack);
+      res.write('EOD')
       res.end()
       });
     })
@@ -116,12 +117,13 @@ function start() {
 
   app.get('/buildApp', function(req,res){
     building = true
-    res.send('\nStarting to build app...\n')
+    started = new Date.getTime()
+    res.send('Starting to build app...')
     
     function put (error, stdout, stderr) {
-      log('\n' + stdout)
-      if (stderr) log('\nstderr: ' + stderr);
-      if (error) log('\nERROR: ' + error.message + '\n\n' + error.stack);
+      log(stdout)
+      if (stderr) log('stderr: ', stderr);
+      if (error) log('ERROR: ' + error.message, error.stack);
     }
   
     var commands = [
@@ -134,14 +136,14 @@ function start() {
     
     function runCommand () {
       var thisCommand = commands.splice(0,1)
-      log('\nExecuting command: ' + thisCommand)
+      log('Executing command: ' + thisCommand)
       exec(thisCommand, function(a,b,c) {
         put(a,b,c)
-        log('\nDONE: ' + thisCommand + '\n\n')
+        log('DONE: ' + thisCommand)
         if (commands.length) {
           runCommand()
         } else {
-          log('\nEOD')
+          log('Build finished in ' + (new Date.getTime() - started) + 'ms.')
           building = false
           built = true
         }
@@ -207,6 +209,6 @@ getIp('gateway')
     //     log('POST Redirect rules returned with status ' + r.statusCode);
     //     log(body)
     //   } else {
-    //     log(e.message + '\n' + e.stack);
+    //     log(e.message + '' + e.stack);
     //   }
     // });
