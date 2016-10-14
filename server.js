@@ -64,6 +64,7 @@ ws.on('connect', function(connection) {
     var data = {
       service: serviceName,
       rules: serviceRules.map(function(rule) {
+        rule.owner = serviceName
         rule.outHost = ip.private
         rule.outPort = PORT
         return rule
