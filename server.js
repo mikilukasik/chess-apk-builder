@@ -121,7 +121,7 @@ function start() {
 
   app.get('/buildApp', function(req,res){
     building = true
-    started = new Date.getTime()
+    started = new Date().getTime()
     res.send('Starting to build app...')
     
     function put (error, stdout, stderr) {
@@ -147,7 +147,7 @@ function start() {
         if (commands.length) {
           runCommand()
         } else {
-          log('Build finished in ' + (new Date.getTime() - started) + 'ms.')
+          log('Build finished in ' + (new Date().getTime() - started) + 'ms.')
           building = false
           built = true
         }
