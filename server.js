@@ -144,4 +144,5 @@ getSecret()
     log('MSG connected', connectionResult)
     msg.expose('status /builder/status')
   }, handle)
+  .then(msg.connect, handle)
 
