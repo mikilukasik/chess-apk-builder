@@ -19,7 +19,7 @@
   "homepage": "https://github.com/mikilukasik/docker-chess-compiler#readme",
   "dependencies": {
     "express": "^4.14.0",
-    "fs": "0.0.2",
+    "fs-extra": "^0.30.0",
     "network": "^0.3.0",
     "request": "^2.75.0",
     "websocket": "^1.0.23"
