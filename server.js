@@ -35,7 +35,7 @@ msg.connect().then(function(){
     })
   })
       
-  msg.on('GET /runCommand/:command', function(req,res){
+  msg.on('GET /builder/runCommand/:command', function(req,res){
     res.writeHead(200, {"Content-Type":"text"});
       exec(req.params.command, function (error, stdout, stderr) {
       res.write(stdout)
@@ -46,7 +46,7 @@ msg.connect().then(function(){
       });
     })
 
-  msg.on('GET /log', function(req,res){
+  msg.on('GET /builder/log', function(req,res){
     log(function(){return 'getLog'}).then(function(logData){
       res.writeHead(200, {"Content-Type":"text/enriched"});
       res.write(logData)
@@ -58,7 +58,7 @@ msg.connect().then(function(){
     })
   })
 
-  msg.on('GET /buildApp', function(req,res){
+  msg.on('GET /builder/buildApp', function(req,res){
     building = true
     started = new Date().getTime()
     res.send('Starting to build app...')
