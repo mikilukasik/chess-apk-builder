@@ -54,9 +54,9 @@ ENV GRADLE_USER_HOME /src/gradle
 COPY package.json /src/package.json
 RUN cd /src; npm install
 RUN npm i nodemon -g
-
 # Bundle app source
 COPY . /src
+RUN cd /src && npm i
 
 EXPOSE 5000-6000
 
