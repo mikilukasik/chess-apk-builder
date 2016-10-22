@@ -56,7 +56,7 @@ RUN cd /src; npm install
 RUN npm i nodemon -g
 # Bundle app source
 COPY . /src
-RUN cd /src && npm i
+# RUN cd /src && npm i
 
 EXPOSE 5000-6000
 
