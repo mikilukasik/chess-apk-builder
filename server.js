@@ -29,7 +29,7 @@ var started = 0
 msg.connect().then(function(){
 
   msg.on('GET /app.apk', function(req,res){
-    fs.readFile('/src/chessIonic/platforms/android/build/outputs/apk/android-debug.apk', function(err, result) {
+    fs.readFile('/src/chess-client/platforms/android/build/outputs/apk/android-debug.apk', function(err, result) {
       if (err) res.status(500).json(err)
       res.send(result)
     })
@@ -70,11 +70,11 @@ msg.connect().then(function(){
     }
 
     var commands = [
-      'rm -rf chessIonic',
+      'rm -rf chess-client',
       'git clone ' + clientRepoWithToken,
-      'cd chessIonic && npm i',
-      'cd chessIonic && cordova platform add android',
-      'cd chessIonic && cordova build'
+      'cd chess-client && npm i',
+      'cd chess-client && cordova platform add android',
+      'cd chess-client && cordova build'
     ]
     
     function runCommand () {
