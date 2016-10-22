@@ -1,27 +1,38 @@
 FROM kallikrein/cordova:5.1.1
 
-ENV DEBIAN_FRONTEND noninteractive
+# Replace shell with bash so we can source files
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-RUN apt-get update
-RUN apt-get -qq update
-RUN apt-get -qq install curl
+# Set debconf to run non-interactively
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
-# TODO could uninstall some build dependencies
+# Install base dependencies
+RUN apt-get update && apt-get install -y -q --no-install-recommends \
+        build-essential \
+        libssl-dev \
+        curl \
+        git \
+        wget \
+    && rm -rf /var/lib/apt/lists/*
 
-# debian installs `node` as `nodejs`
-# RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+# /usr/local/nvm/versions/node/v4.2.3/bin
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 6.3.1
 
-# VOLUME ["/data"]
-# RUN cd /data && npm install
+# Install nvm with node and npm
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash \
+    && source $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
 
 VOLUME /src
 ADD . /src
 WORKDIR /src
-
-
-EXPOSE  5000
-# WORKDIR /data
-
 
 
 RUN \
@@ -39,19 +50,15 @@ RUN ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | /usr/local/android-sd
 
 ENV GRADLE_USER_HOME /src/gradle
 
+# Install app dependencies
+COPY package.json /src/package.json
+RUN cd /src; npm install
+RUN npm i nodemon -g
 
+# Bundle app source
+COPY . /src
 
+EXPOSE 5000-6000
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-RUN apt-get -qq update
-RUN apt-get install -y nodejs
-# RUN cd /src && git clone https://github.com/mikilukasik/chessIonic.git && cd chessIonic && cordova platform add android #
-
-
-
-
-CMD nodejs -v
-
-#####  STILL NODE 0.1!!!!!!!!!!!
-
-CMD cd /src && node -v && npm i && npm start
+# RUN cd /src; npm start
+CMD cd /src; node -v; npm start
