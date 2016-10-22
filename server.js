@@ -6,7 +6,8 @@ var request = require('request');
 // var app = express();
 // var WebSocketClient = require('websocket').client;
 
-console.log(process.env)
+console.log('TOKEN: ', process.env.GIT_TOKEN)
+console.log('REPO: ', process.env['REPO_chess-client'])
 
 var serviceName = 'chess-apk-builder'
 var PORT = 5500;
