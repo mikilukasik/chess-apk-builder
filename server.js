@@ -71,8 +71,8 @@ function setMyRules(){
 
 }
 
-getSecret()
-  .then(function(){
+// getSecret()
+//   .then(function(){
     msg.connect().then(function(){
 
       msg.on('GET /app.apk', function(req,res){
@@ -143,7 +143,7 @@ getSecret()
       })
 
     }, handle)
-  }, handle)
+  // }, handle)
   .then(function(connectionResult){
     log('MSG connected', connectionResult)
     setMyRules()
