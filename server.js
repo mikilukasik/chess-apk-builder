@@ -78,6 +78,7 @@ msg.connect().then(function(){
     var commands = [
       'rm -rf chess-client',
       'git clone ' + clientRepoWithToken,
+      'cd chess-client && cordova plugin add cordova-plugin-device',
       'cd chess-client && npm i',
       'cd chess-client && cordova platform add android',
       'cd chess-client && cordova build'

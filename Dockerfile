@@ -56,7 +56,7 @@ COPY package.json /src/package.json
 COPY . /src
 
 RUN cd /src; npm install
-RUN cd /src; cordova plugin add cordova-plugin-device
+# RUN cd /src; cordova plugin add cordova-plugin-device
 
 EXPOSE 5000-6000
 
