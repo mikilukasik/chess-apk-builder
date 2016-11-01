@@ -15,19 +15,18 @@ RUN apt-get update && apt-get install -y -q --no-install-recommends \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
-# /usr/local/nvm/versions/node/v4.2.3/bin
-ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 4
+# ENV NVM_DIR /usr/local/nvm
+# ENV NODE_VERSION 4
 
-# Install nvm with node and npm
-RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash \
-    && source $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm alias default $NODE_VERSION \
-    && nvm use default
+# # Install nvm with node and npm
+# RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash \
+#     && source $NVM_DIR/nvm.sh \
+#     && nvm install $NODE_VERSION \
+#     && nvm alias default $NODE_VERSION \
+#     && nvm use default
 
-ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+# ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+# ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 
 VOLUME /src
@@ -52,11 +51,12 @@ ENV GRADLE_USER_HOME /src/gradle
 
 # Install app dependencies
 COPY package.json /src/package.json
-RUN cd /src; npm install
-RUN npm i nodemon -g
+# RUN npm i nodemon -g
 # Bundle app source
 COPY . /src
-# RUN cd /src && npm i
+
+RUN cd /src; npm install
+RUN cordova plugin add cordova-plugin-device
 
 EXPOSE 5000-6000
 

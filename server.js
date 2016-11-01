@@ -22,6 +22,9 @@ var msg = require('./chess-common/msgservice')({
   log: createLog({alias: 'msg-on-' + serviceName})
 })
 
+var cloneRepo = requireCommon('cloneRepo')({log: createLog({alias: 'cloneRepo on ' + serviceName}), token: token, repos: {client: repo}})
+
+
 var building = false
 var built = false
 var started = 0
@@ -58,6 +61,9 @@ msg.connect().then(function(){
     })
   })
 
+  msg.expose('status /builder/status')
+  msg.expose('log /builder/log')
+  
   msg.on('GET /builder/buildApp', function(req,res){
     building = true
     started = new Date().getTime()
@@ -97,8 +103,6 @@ msg.connect().then(function(){
 
 }, handle)
 .then(function(connectionResult){
-log('MSG connected', connectionResult)
-setMyRules()
-msg.expose('status /builder/status')
+  log('MSG connected', connectionResult)
 }, handle)
 
