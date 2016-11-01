@@ -22,7 +22,7 @@ var msg = require('./chess-common/msgservice')({
   log: createLog({alias: 'msg-on-' + serviceName})
 })
 
-var cloneRepo = requireCommon('cloneRepo')({log: createLog({alias: 'cloneRepo on ' + serviceName}), token: token, repos: {client: repo}})
+// var cloneRepo = requireCommon('cloneRepo')({log: createLog({alias: 'cloneRepo on ' + serviceName}), token: token, repos: {client: repo}})
 
 
 var building = false
