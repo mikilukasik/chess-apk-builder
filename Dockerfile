@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y -q --no-install-recommends \
         curl \
         git \
         wget \
+        python \
     && rm -rf /var/lib/apt/lists/*
 
 # ENV NVM_DIR /usr/local/nvm
@@ -49,6 +50,7 @@ RUN ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | /usr/local/android-sd
 
 ENV GRADLE_USER_HOME /src/gradle
 
+RUN 
 # Install app dependencies
 COPY package.json /src/package.json
 COPY chess-common/package.json /src/chess-common/package.json
