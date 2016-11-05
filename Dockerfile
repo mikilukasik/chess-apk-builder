@@ -51,11 +51,15 @@ ENV GRADLE_USER_HOME /src/gradle
 
 # Install app dependencies
 COPY package.json /src/package.json
+COPY chess-common/package.json /src/chess-common/package.json
+
+RUN cd /src; npm install
+RUN cd /src/chess-common; npm install
 # RUN npm i nodemon -g
 # Bundle app source
 COPY . /src
 
-RUN cd /src; npm install
+# RUN cd /src; npm install
 # RUN cd /src; cordova plugin add cordova-plugin-device
 
 EXPOSE 5000-6000
